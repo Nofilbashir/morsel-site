@@ -28,7 +28,7 @@ Sizes are what the slot is shaped for (2× for sharp screens); close is fine, th
 | 3 Goals | `screens/goal-gain.png` | same | 900 × 1100 |
 | 4 Workouts | `screens/workout.png` | Phone mockup on a grey tile (fills the tile) | 1200 × 1400 |
 | 5 Sync | `photos/watch-on-wrist.jpg` | Watch on a wrist | 1400 × 1500 |
-| 7 Every evening | `photos/progress-photos.jpg` | Phone in hand, progress-photo compare on screen | 1400 × 1500 |
+| 7 After every day | `photos/progress-photos.jpg` | Phone in hand, progress-photo compare on screen | 1400 × 1500 |
 | 8 Forecast | `screens/forecast.png` | Phone mockup on a white tile (fills the tile) | 1200 × 1400 |
 | 9 Inside the app | `screens/ui-home.png` | Phone mockup, transparent | 900 × 1200 |
 | 9 Inside the app | `screens/ui-log.png` | Phone mockup, transparent | 900 × 1200 |
