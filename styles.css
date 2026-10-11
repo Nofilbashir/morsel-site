@@ -155,12 +155,18 @@ figure { margin: 0; }
 
 /* ---------- Nav ---------- */
 
-.nav {
-  position: sticky; top: 0; z-index: 20;
+/* On the home page the bar starts out empty (.top): the logo sits beside the
+   hero headline instead. Once the page scrolls, the logo flies up into the bar
+   (index.html's script), the bar fades in and the name slides out of the logo.
+   Other pages never get .top, so they show an ordinary bar. */
+.nav { position: sticky; top: 0; z-index: 20; isolation: isolate; }
+.nav::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
   background: color-mix(in srgb, var(--page) 82%, transparent);
   backdrop-filter: saturate(1.6) blur(14px);
   -webkit-backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid var(--line);
+  transition: opacity .4s ease .15s;
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
 .brand {
@@ -169,10 +175,37 @@ figure { margin: 0; }
   font-family: var(--display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em;
 }
 .brand img { border-radius: 8px; }
+.nav .brand span {
+  display: inline-block;
+  transition:
+    clip-path .5s cubic-bezier(.2, .8, .2, 1) .45s,
+    transform .5s cubic-bezier(.2, .8, .2, 1) .45s,
+    opacity .3s ease .45s;
+}
 .nav-cta {
   background: var(--ink); color: var(--page);
   text-decoration: none; font-weight: 800; font-size: .88rem;
   padding: 9px 18px; border-radius: 999px;
+  transition: opacity .4s ease .15s, visibility 0s;
+}
+.nav.top::before { opacity: 0; transition-delay: 0s; }
+.nav.top .brand img { opacity: 0; }
+.nav.top .brand span {
+  clip-path: inset(0 100% 0 0); transform: translateX(-12px); opacity: 0;
+  transition-duration: .2s; transition-delay: 0s;
+}
+.nav.top .nav-cta { opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility 0s .2s; }
+
+/* The logo in flight between the hero and the bar. It is drawn at the hero's
+   size and only ever scaled down, so it stays sharp; moving it is transform
+   only, which the GPU does without redrawing the page. */
+.brand-flyer {
+  position: fixed; top: 0; left: 0; z-index: 30;
+  transform-origin: 0 0; will-change: transform;
+  visibility: hidden; pointer-events: none;
+  border-radius: 26.7%;
+  box-shadow: 0 24px 60px -12px rgba(250, 80, 2, .45);
+  transition: transform .65s cubic-bezier(.33, 0, .15, 1);
 }
 
 /* ---------- CTA ---------- */
@@ -250,6 +283,19 @@ figure { margin: 0; }
 /* ---------- Hero ---------- */
 
 .hero { padding-top: 72px; }
+/* The logo beside the two headline lines, sized from the headline's own type. */
+.hero-lockup {
+  display: flex; align-items: center; justify-content: center; gap: .32em;
+  font-size: clamp(2.6rem, 8.4vw, 6.4rem);
+}
+/* Left-aligned, the first line's descenders (pp) sit right over the second
+   line's ascenders (l, d), so these two lines get a little more air. */
+.hero-lockup .mega { font-size: 1em; text-align: left; line-height: 1.1; }
+.hero-mark {
+  flex: none; width: 1.5em; height: 1.5em;
+  border-radius: 26.7%;
+  box-shadow: 0 24px 60px -12px rgba(250, 80, 2, .45);
+}
 .app-icon {
   display: inline-block;
   border-radius: 30px;
@@ -257,10 +303,6 @@ figure { margin: 0; }
 }
 .app-icon img { border-radius: 30px; width: 120px; height: 120px; }
 .app-icon-dark { box-shadow: 0 24px 70px -10px rgba(255, 107, 38, .55); margin-bottom: 40px; }
-.app-name {
-  font-family: var(--display); font-weight: 700; font-size: 1.7rem; letter-spacing: -0.03em;
-  margin: 18px 0 56px;
-}
 .tags { margin-top: 40px; color: var(--ink-mid); font-weight: 600; font-size: 1rem; }
 .tags i { font-style: normal; margin: 0 .35em; color: var(--ink-dim); }
 .hero .cta { margin-top: 40px; }
@@ -752,9 +794,10 @@ figure { margin: 0; }
 
   /* Hero: shorter, photos side by side. */
   .hero { padding-top: 40px; }
+  .hero-lockup { font-size: clamp(2rem, 9.4vw, 3rem); }
+  .hero-mark { box-shadow: 0 14px 34px -10px rgba(250, 80, 2, .45); }
   .app-icon img { width: 84px; height: 84px; border-radius: 22px; }
   .app-icon { border-radius: 22px; }
-  .app-name { font-size: 1.3rem; margin: 10px 0 28px; }
   .tags { margin-top: 22px; font-size: .88rem; }
   .hero .cta { margin-top: 28px; }
   .tiles { margin-top: 44px; }

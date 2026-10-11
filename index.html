@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Poppins:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -39,20 +39,23 @@
       <a class="nav-cta" href="https://play.google.com/store/apps/details?id=com.morsel.app">Get the app</a>
     </div>
   </header>
+  <script>
+    // At the top of the page the bar starts empty; the logo is beside the headline.
+    if (window.scrollY < 12) document.querySelector('.nav').classList.add('top');
+  </script>
 
   <main id="top">
 
     <!-- ============ 1. HERO ============ -->
     <section class="sec hero">
       <div class="wrap center">
-        <div class="app-icon">
-          <img src="img/morsel-icon.svg" alt="Morsel app icon" width="132" height="132">
+        <div class="hero-lockup">
+          <img class="hero-mark" src="img/morsel-icon.svg" alt="" width="154" height="154">
+          <h1 class="mega">
+            <span>Life happens.</span>
+            <span class="grad">Morsel adapts.</span>
+          </h1>
         </div>
-        <p class="app-name">Morsel</p>
-        <h1 class="mega">
-          <span>Life happens.</span>
-          <span class="grad">Morsel adapts.</span>
-        </h1>
         <p class="serif lede">A calorie and macro plan built from your goal, your body and how you move. Eat, train, walk, and watch it add up.</p>
         <p class="tags">Calories <i>·</i> Protein <i>·</i> Any cuisine <i>·</i> Workouts <i>·</i> Steps <i>·</i> Watch sync</p>
 
@@ -681,6 +684,91 @@
   </a>
 
   <script>
+    // The logo flies between the hero and the bar: up into the bar once the page
+    // scrolls, back beside the headline at the top. One logo, drawn at hero size,
+    // moved with transform only (see .brand-flyer).
+    (function () {
+      var nav = document.querySelector('.nav');
+      var mark = document.querySelector('.hero-mark');
+      var navIcon = nav && nav.querySelector('.brand img');
+      if (!nav || !mark || !navIcon) { if (nav) nav.classList.remove('top'); return; }
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var flyer = document.createElement('img');
+      flyer.src = mark.src;
+      flyer.alt = '';
+      flyer.className = 'brand-flyer';
+      flyer.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(flyer);
+
+      var docked = !nav.classList.contains('top');
+      var flight = 0;
+      if (docked) mark.style.visibility = 'hidden';
+
+      function inFlight() { return flyer.style.visibility === 'visible'; }
+      function onScreen(r) { return r.bottom > 0 && r.top < window.innerHeight; }
+      function place(r, size) {
+        flyer.style.transform = 'translate(' + r.left + 'px,' + r.top + 'px) scale(' + r.width / size + ')';
+      }
+      function fly(from, to, land) {
+        var id = ++flight;
+        var size = mark.getBoundingClientRect().width;
+        flyer.style.width = flyer.style.height = size + 'px';
+        flyer.style.transition = 'none';
+        place(from, size);
+        flyer.style.visibility = 'visible';
+        flyer.getBoundingClientRect(); // commit the start before moving
+        flyer.style.transition = '';
+        place(to, size);
+        var done = false;
+        function finish() {
+          if (done || id !== flight) return;
+          done = true;
+          land();
+          flyer.style.visibility = 'hidden';
+        }
+        flyer.addEventListener('transitionend', finish, { once: true });
+        setTimeout(finish, 900);
+      }
+      // A fast flick can carry the hero logo past the top of the screen before
+      // the first scroll event lands. Start it no higher than half off-screen,
+      // so it always makes a whole journey instead of snapping into the bar.
+      function fromEdge(r) {
+        var top = Math.max(r.top, -r.height / 2);
+        return { left: r.left, top: top, width: r.width, height: r.height, bottom: top + r.height };
+      }
+      function dock() {
+        docked = true;
+        var from = inFlight() ? flyer.getBoundingClientRect() : fromEdge(mark.getBoundingClientRect());
+        mark.style.visibility = 'hidden';
+        navIcon.style.visibility = 'hidden';
+        nav.classList.remove('top');
+        if (still.matches) {
+          flight++; flyer.style.visibility = 'hidden'; navIcon.style.visibility = '';
+          return;
+        }
+        fly(from, navIcon.getBoundingClientRect(), function () { navIcon.style.visibility = ''; });
+      }
+      function undock() {
+        docked = false;
+        var from = inFlight() ? flyer.getBoundingClientRect() : navIcon.getBoundingClientRect();
+        navIcon.style.visibility = 'hidden';
+        nav.classList.add('top');
+        var to = mark.getBoundingClientRect();
+        if (still.matches || !onScreen(to)) {
+          flight++; flyer.style.visibility = 'hidden'; mark.style.visibility = '';
+          return;
+        }
+        fly(from, to, function () { mark.style.visibility = ''; });
+      }
+      function check() {
+        var y = window.scrollY;
+        if (!docked && y > 40) dock();
+        else if (docked && y < 12) undock();
+      }
+      window.addEventListener('scroll', check, { passive: true });
+      check();
+    })();
+
     // The pinned download bar (phones) waits until the hero's badge has scrolled out of view.
     (function () {
       var bar = document.querySelector('.sticky-cta');
