@@ -26,20 +26,19 @@ Sizes are what the slot is shaped for (2× for sharp screens); close is fine, th
 | 1 Hero | `photos/watch.jpg` | Watch close-up, steps on the face | 1600 × 1460 |
 | 3 Goals | `screens/goal-lose.png` | Phone mockup, top part only (cut at the bottom), transparent | 900 × 1100 |
 | 3 Goals | `screens/goal-gain.png` | same | 900 × 1100 |
-| 4 Workouts | `screens/workout.png` | Phone mockup on a grey tile (fills the tile) | 1200 × 1400 |
-| 5 Sync | `photos/watch-on-wrist.jpg` | Watch on a wrist | 1400 × 1500 |
-| 7 After every day | `photos/progress-photos.jpg` | Phone in hand, progress-photo compare on screen | 1400 × 1500 |
-| 8 Forecast | `screens/forecast.png` | Phone mockup on a white tile (fills the tile) | 1200 × 1400 |
-| 9 Inside the app | `screens/ui-home.png` | Phone mockup, transparent | 900 × 1200 |
-| 9 Inside the app | `screens/ui-log.png` | Phone mockup, transparent | 900 × 1200 |
-| 9 Inside the app | `screens/ui-progress.png` | Phone mockup, transparent | 900 × 1200 |
-| 11 Five screens | `screens/shot-plan.png` | Phone mockup | 700 × 1100 |
-| 11 Five screens | `screens/shot-food.png` | Phone mockup | 700 × 1100 |
-| 11 Five screens | `screens/shot-watch.png` | Phone + watch mockup | 700 × 1100 |
-| 11 Five screens | `screens/shot-day.png` | Phone mockup: a finished day's verdict | 700 × 1100 |
-| 11 Five screens | `screens/shot-progress.png` | Phone mockup | 700 × 1100 |
+| 4 Food | `screens/food.png` | Phone mockup on a grey tile (fills the tile): food search | 1200 × 1400 |
+| 5 Watch & steps | `photos/watch-on-wrist.jpg` | Watch on a wrist | 1400 × 1500 |
+| 6 Workouts | `screens/workout.png` | Phone mockup on a white tile (fills the tile) | 1200 × 1400 |
+| 7 Forecast | `screens/forecast.png` | Phone mockup on a grey tile (fills the tile) | 1200 × 1400 |
+| 8 Inside the app | `screens/shot-plan.png` | Phone mockup: the plan | 700 × 1100 |
+| 8 Inside the app | `screens/shot-home.png` | Phone mockup: Home | 700 × 1100 |
+| 8 Inside the app | `screens/shot-food.png` | Phone mockup: food search | 700 × 1100 |
+| 8 Inside the app | `screens/shot-watch.png` | Phone + watch mockup | 700 × 1100 |
+| 8 Inside the app | `screens/shot-progress.png` | Phone mockup: Progress | 700 × 1100 |
+| 9 Progress | `screens/progress.png` | Phone mockup on a grey tile (fills the tile): the Progress tab | 1200 × 1400 |
+| 9 Progress | `photos/progress-photos.jpg` | Phone in hand, progress-photo compare on screen | 1400 × 1500 |
 
-The sync diagram in section 5 (watch + phone → Morsel) is drawn in code; no image needed.
+The sync diagram and the step-goal chart in section 5 are drawn in code; no image needed.
 
 Phone mockups (`screens/`) should be PNGs with a transparent background; they sit at the bottom
 of their card. Photos (`photos/`) fill their rounded tile edge to edge.

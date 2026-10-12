@@ -286,7 +286,9 @@ figure { margin: 0; }
 /* The logo beside the two headline lines, sized from the headline's own type. */
 .hero-lockup {
   display: flex; align-items: center; justify-content: center; gap: .32em;
-  font-size: clamp(2.6rem, 8.4vw, 6.4rem);
+  /* Sized so the longer line ("Morsel pays attention.") stays whole beside
+     the logo: line + gap + logo is about 12.6em. */
+  font-size: clamp(2rem, 7.2vw, 5.6rem);
 }
 /* Left-aligned, the first line's descenders (pp) sit right over the second
    line's ascenders (l, d), so these two lines get a little more air. */
@@ -319,14 +321,6 @@ figure { margin: 0; }
 .card-dark { background: var(--dark-card); text-align: left; }
 .card-dark p { color: var(--on-dark-mid); }
 
-.facts {
-  display: grid; gap: 28px;
-  margin-top: 72px; padding-top: 40px;
-  border-top: 1px solid var(--line);
-}
-.facts h3 { font-family: var(--sans); font-weight: 700; font-size: 1.05rem; color: var(--ink-mid); }
-.facts p { margin-top: 8px; font-size: 1.15rem; line-height: 1.5; }
-@media (min-width: 720px) { .facts { grid-template-columns: repeat(4, 1fr); } }
 
 .pair { display: grid; gap: 20px; margin-top: 64px; }
 .trio { display: grid; gap: 20px; margin-top: 64px; }
@@ -342,47 +336,34 @@ figure { margin: 0; }
 }
 .sec-dark .small-print { color: var(--on-dark-mid); }
 
-/* ---------- Problem vs the Morsel way ---------- */
+/* ---------- Most apps vs Morsel ---------- */
 
-.versus { display: grid; gap: 20px; margin-top: 64px; }
-.vs { border-radius: var(--r-lg); padding: 36px 32px 40px; }
-.vs h3 { font-size: clamp(1.4rem, 2.4vw, 1.85rem); line-height: 1.15; letter-spacing: -0.03em; margin-top: 28px; }
-.vs > p:last-child { margin-top: 12px; font-size: 1.08rem; }
-.vs-tag {
-  display: inline-block;
-  font-weight: 800; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
-  padding: 6px 12px; border-radius: 999px;
+.compare { margin-top: 64px; background: var(--card); border-radius: var(--r-lg); padding: 8px 40px; }
+.compare-row { display: grid; gap: 10px 56px; padding: 26px 0; }
+.compare-row + .compare-row { border-top: 1px solid var(--line); }
+.compare-head { padding: 22px 0 16px; }
+.compare-head span {
+  font-family: var(--display); font-weight: 700; font-size: .9rem;
+  letter-spacing: .04em; text-transform: uppercase;
 }
-.vs-visual { margin-top: 24px; border-radius: 20px; padding: 22px; }
-.vs-row { display: flex; align-items: center; gap: 14px; }
-.vs-row + .vs-row { margin-top: 12px; }
-.vs-label { width: 64px; font-size: .85rem; font-weight: 700; }
-.dots { display: flex; gap: 8px; }
-.dots i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid currentColor; opacity: .35; }
-.dots i.on { opacity: 1; }
-.vs-pill {
-  display: inline-block; margin-top: 18px;
-  font-size: .85rem; font-weight: 800; line-height: 1.3;
-  padding: 8px 14px; border-radius: 12px;
+.compare-head span:first-child { color: var(--ink-dim); }
+.compare-head span:last-child { color: var(--accent); }
+.compare-them, .compare-us { position: relative; padding-left: 36px; font-size: 1.08rem; line-height: 1.45; }
+.compare-them { color: var(--ink-mid); }
+.compare-us { color: var(--ink); font-weight: 600; }
+.compare-them::before, .compare-us::before {
+  content: ''; position: absolute; left: 0; top: .12em;
+  width: 22px; height: 22px; border-radius: 50%;
 }
-
-.vs-problem { background: var(--card); color: var(--ink); }
-.vs-problem .vs-tag { background: var(--gray); color: var(--ink-mid); }
-.vs-problem .vs-visual { background: var(--gray); color: var(--ink-dim); }
-.vs-problem .vs-label { color: var(--ink-mid); }
-.vs-problem .dots i.on { background: var(--ink-dim); border-color: var(--ink-dim); }
-.vs-problem .vs-pill { background: var(--card); color: var(--ink-mid); text-decoration: line-through; text-decoration-thickness: 1.5px; }
-.vs-problem > p:last-child { color: var(--ink-mid); }
-
-.vs-morsel { background: #000000; color: #F5F5F7; }
-.vs-morsel .vs-tag { background: #FA5002; color: #FFFFFF; }
-.vs-morsel .vs-visual { background: #1C1C1E; color: #FF6B26; }
-.vs-morsel .vs-label { color: #A1A1A6; }
-.vs-morsel .dots i.on { background: #FF6B26; border-color: #FF6B26; }
-.vs-morsel .vs-row + .vs-row .dots i:not(.on) { opacity: .2; }
-.vs-morsel .vs-pill { background: rgba(255, 107, 38, .16); color: #FF8A4C; }
-.vs-morsel > p:last-child { color: #A1A1A6; }
-@media (min-width: 760px) { .versus { grid-template-columns: 1fr 1fr; } }
+.compare-them::before {
+  background: var(--gray)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M7.2 7.2l5.6 5.6M12.8 7.2l-5.6 5.6' fill='none' stroke='%23A9A8AE' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 22px no-repeat;
+}
+.compare-us::before {
+  background: var(--accent-soft)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%23FA5002' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 22px no-repeat;
+}
+@media (min-width: 760px) { .compare-row { grid-template-columns: 1fr 1fr; } }
 
 /* ---------- Feature split (copy + one image) ---------- */
 
@@ -393,6 +374,8 @@ figure { margin: 0; }
   .feature { grid-template-columns: 1.05fr 1fr; gap: 72px; }
   .feature-flip .feature-copy { order: 2; }
 }
+/* A second feature inside a section, under its first part. */
+.feature-sub { margin-top: 112px; }
 
 .points { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 14px; }
 .points li { position: relative; padding-left: 34px; font-weight: 600; font-size: 1.05rem; }
@@ -403,19 +386,6 @@ figure { margin: 0; }
   background: var(--accent-soft)
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%23FA5002' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 22px no-repeat;
 }
-
-/* ---------- Interface cards ---------- */
-
-.trio-screens { margin-top: 72px; }
-.card-screen {
-  display: flex; flex-direction: column;
-  padding: 40px 36px 0;
-  overflow: hidden;
-  min-height: 640px;
-}
-.card-screen .kicker { font-size: 1.15rem; margin-bottom: 8px; }
-.card-screen h3 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); }
-.card-screen .slot-phone { margin-top: auto; padding-top: 40px; aspect-ratio: 900 / 1200; width: 100%; }
 
 /* ---------- Goals panel ---------- */
 
@@ -560,6 +530,15 @@ figure { margin: 0; }
 }
 .steps-stats .stat + p { margin-top: 8px; font-size: 1rem; }
 @media (min-width: 560px) { .steps-stats { grid-template-columns: 1fr 1fr; } }
+/* Steps sits inside the dark Watch section, so its card goes dark too. */
+.sec-dark .steps-card { background: var(--dark-card); }
+.sec-dark .steps-title { color: var(--on-dark) !important; }
+.sec-dark .steps-chart line { stroke: #3A3A3C; }
+.sec-dark .steps-chart rect:not(:last-of-type) { fill: #5A2A14; }
+.sec-dark .steps-stats { border-top-color: rgba(255, 255, 255, .12); }
+.sec-dark .steps-stats .stat { color: var(--on-dark); }
+.sec-dark .steps-card p { color: var(--on-dark-mid); }
+.sec-dark .steps-chart .svg-label:not(.svg-accent), .sec-dark .steps-chart .svg-small { fill: var(--on-dark-mid); }
 
 .svg-small { font-family: var(--sans); font-weight: 600; font-size: 12px; fill: var(--ink-mid); }
 .svg-label { font-family: var(--sans); font-weight: 800; font-size: 13px; fill: var(--ink-mid); }
@@ -569,6 +548,8 @@ figure { margin: 0; }
 
 .smalls { display: grid; gap: 20px; margin-top: 64px; }
 .small { padding: 32px 30px; }
+/* On a white section the cards are grey, so they still read as cards. */
+.sec:not(.sec-gray) .small { background: var(--gray); }
 .small-icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 48px; height: 48px; border-radius: 14px;
@@ -582,6 +563,12 @@ figure { margin: 0; }
 @media (min-width: 1000px) { .smalls { grid-template-columns: repeat(3, 1fr); } }
 
 /* ---------- Day states ---------- */
+
+/* The day verdicts, a highlight inside Progress: a smaller heading than a section's own. */
+.verdicts { margin-top: 112px; max-width: 40rem; }
+.verdicts h3 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); letter-spacing: -0.035em; line-height: 1.15; }
+.verdicts p:last-child { margin-top: 12px; color: var(--ink-mid); font-size: 1.08rem; }
+.verdicts + .states { margin-top: 32px; }
 
 .states {
   display: grid; gap: 16px;
@@ -619,7 +606,7 @@ figure { margin: 0; }
 .shots {
   display: grid; gap: 16px;
   margin-top: 72px;
-  grid-template-columns: repeat(5, minmax(240px, 1fr));
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 12px;
@@ -728,7 +715,6 @@ figure { margin: 0; }
 .card .kicker { color: var(--accent); margin-top: 0; font-size: 1.05rem; }
 .card-dark .kicker { color: #FF6B26; }
 .card-stats h3 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); letter-spacing: -0.035em; line-height: 1.12; }
-.card-screen { background: var(--gray); }
 
 /* Two goals, two phones. */
 .panel.panel-two { grid-template-columns: repeat(2, 1fr); gap: 6%; padding: 6% 12% 0; }
@@ -783,7 +769,6 @@ figure { margin: 0; }
   .rail::-webkit-scrollbar { display: none; }
   .rail > * { flex: 0 0 80%; scroll-snap-align: start; }
   /* A rail inside a .wrap reaches the screen edge. */
-  .states.rail { margin: 0 calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
   .swipe-hint {
     display: block; margin-top: 20px;
     font-size: .85rem; font-weight: 700; color: var(--ink-dim);
@@ -792,9 +777,14 @@ figure { margin: 0; }
   @keyframes nudge { 50% { transform: translateX(5px); } }
   .center .swipe-hint, .wrap > .swipe-hint:only-child { text-align: center; }
 
+  .verdicts, .feature-sub { margin-top: 64px; }
+
   /* Hero: shorter, photos side by side. */
   .hero { padding-top: 40px; }
-  .hero-lockup { font-size: clamp(2rem, 9.4vw, 3rem); }
+  /* Too narrow for the logo beside these lines: it sits above them instead. */
+  .hero-lockup { flex-direction: column; gap: 18px; font-size: clamp(1.6rem, 8.3vw, 2.4rem); }
+  .hero-lockup .mega { text-align: center; }
+  .hero-mark { width: 60px; height: 60px; }
   .hero-mark { box-shadow: 0 14px 34px -10px rgba(250, 80, 2, .45); }
   .app-icon img { width: 84px; height: 84px; border-radius: 22px; }
   .app-icon { border-radius: 22px; }
@@ -809,16 +799,13 @@ figure { margin: 0; }
   .slot.empty figcaption b { font-size: .78rem; word-break: break-all; }
   .slot-phone.empty figcaption { inset: 0 8% 0; }
 
-  /* Overview: facts two by two. */
-  .facts { grid-template-columns: 1fr 1fr; gap: 22px 16px; margin-top: 44px; padding-top: 28px; }
-  .facts h3 { font-size: .9rem; }
-  .facts p { font-size: .98rem; }
-  .versus { margin-top: 40px; gap: 12px; }
-  .vs { padding: 26px 22px 28px; border-radius: 28px; }
-  .vs-visual { padding: 16px; margin-top: 18px; }
-  .dots i { width: 18px; height: 18px; }
-  .vs h3 { margin-top: 20px; font-size: 1.35rem; }
-  .vs > p:last-child { font-size: 1rem; }
+  /* Most apps vs Morsel: each row stacks; the cross and the tick say which is which. */
+  .compare { margin-top: 36px; padding: 4px 20px; border-radius: 24px; }
+  .compare-head { display: none; }
+  .compare-row { padding: 20px 0; }
+  .compare-row:nth-child(2) { border-top: 0; }
+  .compare-them { font-size: .95rem; }
+  .compare-us { font-size: 1rem; }
 
   /* Goals: two bigger phones, captions side by side. */
   .panel.panel-two { margin-top: 40px; padding: 8% 6% 0; gap: 5%; border-radius: 28px; }
@@ -854,20 +841,6 @@ figure { margin: 0; }
   .steps-stats .stat { font-size: 2rem; }
   .steps-stats .stat + p { font-size: .88rem; }
 
-  /* Day verdicts: a swipeable row, two cards in view. */
-  .states { margin-top: 12px; gap: 10px; }
-  .states.rail > * { flex-basis: 44%; }
-  .state-card { padding: 18px 16px 18px; border-radius: 22px; }
-  .state-name { font-size: 1.1rem; }
-  .state-line { font-size: .8rem; min-height: 6.4em; }
-  .state-desc { font-size: .88rem; }
-
-  /* Inside the app: swipe through the three screens. */
-  .trio-screens { margin-top: 12px; }
-  .card-screen { min-height: 0; padding: 28px 24px 0; }
-  .card-screen h3 { font-size: 1.45rem; }
-  .card-screen .slot-phone { padding-top: 24px; }
-
   /* The small things: two by two, compact. */
   .smalls { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 36px; }
   .small { padding: 18px 16px; }
@@ -894,26 +867,18 @@ figure { margin: 0; }
   .app-icon-dark { margin-bottom: 28px; }
 }
 
-/* Phones: "Three screens" swipes exactly like "Five screens". */
-@media (max-width: 759px) {
-  .trio-screens.rail > * { flex-basis: 70%; }
-  .trio-screens .card-screen { padding: 24px 20px 0; border: 1px solid var(--line); }
-  .trio-screens .card-screen h3 { font-size: 1.3rem; }
-  .trio-screens .card-screen p { font-size: .92rem; }
-}
 
-
-/* Phones: the day verdicts as stacked cards, two per row; the fifth spans the row. */
+/* Phones: the day verdicts as one compact list, a row each: the ring, then the
+   verdict and its line. The note under each card is left out; the line says it. */
 @media (max-width: 759px) {
-  .states { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 10px; margin-top: 28px; }
-  .state-card { aspect-ratio: auto; min-height: 210px; padding: 16px 14px 18px; }
-  .state-card svg { width: 46%; }
-  .state:last-child { grid-column: 1 / -1; }
-  .state:last-child .state-card {
-    min-height: 0; display: grid; grid-template-columns: 56px 1fr;
-    column-gap: 16px; align-items: center;
+  .states { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 24px; }
+  .state-card {
+    aspect-ratio: auto; display: grid; grid-template-columns: 40px 1fr;
+    column-gap: 14px; align-items: center;
+    padding: 14px 16px; border-radius: 18px;
   }
-  .state:last-child .state-card svg { grid-row: 1 / span 2; width: 56px; margin: 0; }
-  .state:last-child .state-name { grid-column: 2; margin-top: 0; padding-top: 0; align-self: end; }
-  .state:last-child .state-line { grid-column: 2; min-height: 0; align-self: start; }
+  .state-card svg { grid-row: 1 / span 2; width: 40px; margin: 0; }
+  .state-name { grid-column: 2; margin-top: 0; padding-top: 0; font-size: 1.02rem; align-self: end; }
+  .state-line { grid-column: 2; margin-top: 2px; min-height: 0; font-size: .84rem; align-self: start; }
+  .state-desc { display: none; }
 }
